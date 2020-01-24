@@ -5,6 +5,65 @@ class LinkedList {
     this.head = null;
   }
 
+  display() {
+    let currentNode = this.head;
+    while (currentNode) {
+      console.log(currentNode.value);
+      currentNode = currentNode.next;
+    }
+  }
+
+  size() {
+    let currentNode = this.head;
+    let count = 0;
+    if (!currentNode) {
+      return count;
+    }
+
+    while (currentNode) {
+      count++;
+      currentNode = currentNode.next;
+    }
+    return count;
+  }
+
+  isempty() {
+    return !this.head;
+  }
+
+  findPrevious(item) {
+    if (!this.head) {
+      return null;
+    }
+
+    let currNode = this.head;
+    let previousNode = this.head;
+
+    while (currNode.value !== item) {
+      if (currNode.next === null) {
+        return null; //couldn't find item
+      } else {
+        previousNode = currNode;
+        currNode = currNode.next;
+      }
+    }
+
+    return previousNode;
+  }
+
+  findLast() {
+    if (this.isempty()) {
+      console.log(
+        'empty list: yer lookin at the last thing '
+      );
+    }
+    let currentNode = this.head;
+    while (currentNode.next) {
+      currentNode = currentNode.next;
+    }
+    return currentNode;
+  }
+
   find(item) {
     if (!this.head) {
       return null;
@@ -12,10 +71,10 @@ class LinkedList {
     let currNode = this.head;
 
     while (currNode.value !== item) {
-      if (currNode.next !== null) {
+      if (currNode.next === null) {
         return null; //couldn't find item
       } else {
-        currNode = this.next;
+        currNode = currNode.next;
       }
     }
 
@@ -63,13 +122,13 @@ class LinkedList {
     let previousNode = this.head;
 
     while (
-      currNode.value !== item &&
-      currNode.next !== null
+      currNode !== null &&
+      currNode.value !== item
     ) {
       previousNode = currNode;
       currNode = currNode.next;
     }
-    if (currNode.next === null) {
+    if (currNode === null) {
       console.log('Item not found');
       return;
     } else {
@@ -147,26 +206,31 @@ class LinkedList {
   insertAt(position, insert) {
     let currItem = this.head;
     if (position === 0) {
-      this.head = new _Node (
+      this.head = new _Node(
         insert,
         this.head
       );
     }
-    if (!currItem){
-      console.log('Empty LinkedList')
+    if (!currItem) {
+      console.log('Empty LinkedList');
       return;
     }
-    for ( let i=0; i<position-1; i++) {
+    for (
+      let i = 0;
+      i < position - 1;
+      i++
+    ) {
       currItem = currItem.next;
     }
-    let newNode = new _Node (
+    let newNode = new _Node(
       insert,
       currItem.next
     );
     currItem.next = newNode;
-    console.log(`inserted ${insert} at position ${position}. Before ${newNode.next.value} and after ${currItem.value}`);
+    console.log(
+      `inserted ${insert} at position ${position}. Before ${newNode.next.value} and after ${currItem.value}`
+    );
     return;
   }
-
 }
 module.exports = LinkedList;
