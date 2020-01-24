@@ -80,7 +80,7 @@ class LinkedList {
 
   insertBefore(item, insert) {
     let currItem = this.head;
-    let nextItem = currItem.next;
+    let previousItem = this.head;
     if (!currItem) {
       console.log(
         'item does not exist'
@@ -89,21 +89,14 @@ class LinkedList {
     }
 
     while (
-      nextItem.value !== item &&
-      nextItem.next !== null
+      currItem !== null &&
+      currItem.value !== item
     ) {
+      previousItem = currItem;
       currItem = currItem.next;
-      nextItem = nextItem.next;
-      console.log(
-        currItem.value,
-        nextItem.value
-      );
     }
 
-    if (
-      nextItem.next === null &&
-      nextItem.value !== item
-    ) {
+    if (currItem === null) {
       console.log(
         'item you want to insert before doesnt exist'
       );
@@ -111,11 +104,11 @@ class LinkedList {
     }
     let newitem = new _Node(
       insert,
-      nextItem
+      currItem
     );
-    currItem.next = newitem;
+    previousItem.next = newitem;
     console.log(
-      `item inserted before ${nextItem.value} and after ${currItem.value}`
+      `item inserted before ${currItem.value} and after ${previousItem.value}`
     );
   }
 }
