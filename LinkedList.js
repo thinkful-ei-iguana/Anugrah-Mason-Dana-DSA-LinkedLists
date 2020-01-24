@@ -1,8 +1,6 @@
-import _Node from './_Node';
+const _Node = require('./_Node');
 
-const Node = require('./_Node');
-
-export default class LinkedList {
+class LinkedList {
   constructor() {
     this.head = null;
   }
@@ -37,13 +35,17 @@ export default class LinkedList {
       this.insertFirst(value);
     } else {
       let currNode = this.head;
-      while (currNode !== null) {
+      while (currNode.next !== null) {
         currNode = currNode.next;
       }
       //set the last node's next
+
       currNode.next = new _Node(
         value,
         null
+      );
+      console.log(
+        new _Node(value, null)
       );
     }
   }
@@ -62,12 +64,12 @@ export default class LinkedList {
 
     while (
       currNode.value !== item &&
-      currNode !== null
+      currNode.next !== null
     ) {
       previousNode = currNode;
       currNode = currNode.next;
     }
-    if (currNode === null) {
+    if (currNode.next === null) {
       console.log('Item not found');
       return;
     } else {
@@ -75,4 +77,46 @@ export default class LinkedList {
       //how come we don't delete it from memory? will it be garbage collection
     }
   }
+
+  insertBefore(item, insert) {
+    let currItem = this.head;
+    let nextItem = currItem.next;
+    if (!currItem) {
+      console.log(
+        'item does not exist'
+      );
+      return;
+    }
+
+    while (
+      nextItem.value !== item &&
+      nextItem.next !== null
+    ) {
+      currItem = currItem.next;
+      nextItem = nextItem.next;
+      console.log(
+        currItem.value,
+        nextItem.value
+      );
+    }
+
+    if (
+      nextItem.next === null &&
+      nextItem.value !== item
+    ) {
+      console.log(
+        'item you want to insert before doesnt exist'
+      );
+      return;
+    }
+    let newitem = new _Node(
+      insert,
+      nextItem
+    );
+    currItem.next = newitem;
+    console.log(
+      `item inserted before ${nextItem.value} and after ${currItem.value}`
+    );
+  }
 }
+module.exports = LinkedList;
