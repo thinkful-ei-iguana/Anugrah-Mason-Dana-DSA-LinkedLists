@@ -111,5 +111,62 @@ class LinkedList {
       `item inserted before ${currItem.value} and after ${previousItem.value}`
     );
   }
+
+  insertAfter(item, insert) {
+    let currItem = this.head;
+    if (!currItem) {
+      console.log(
+        'item does not exist'
+      );
+      return;
+    }
+
+    while (
+      currItem !== null &&
+      currItem.value !== item
+    ) {
+      currItem = currItem.next;
+    }
+
+    if (currItem === null) {
+      console.log(
+        'item you want to insert after doesnt exist'
+      );
+      return;
+    }
+    let newitem = new _Node(
+      insert,
+      currItem.next
+    );
+    currItem.next = newitem;
+    console.log(
+      `item inserted after ${currItem.value}`
+    );
+  }
+
+  insertAt(position, insert) {
+    let currItem = this.head;
+    if (position === 0) {
+      this.head = new _Node (
+        insert,
+        this.head
+      );
+    }
+    if (!currItem){
+      console.log('Empty LinkedList')
+      return;
+    }
+    for ( let i=0; i<position-1; i++) {
+      currItem = currItem.next;
+    }
+    let newNode = new _Node (
+      insert,
+      currItem.next
+    );
+    currItem.next = newNode;
+    console.log(`inserted ${insert} at position ${position}. Before ${newNode.next.value} and after ${currItem.value}`);
+    return;
+  }
+
 }
 module.exports = LinkedList;

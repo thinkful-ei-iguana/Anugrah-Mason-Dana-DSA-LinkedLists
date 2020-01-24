@@ -14,6 +14,9 @@ function main() {
     'Squirrel',
     'something else'
   );
+
+  SLL.insertAfter('Helo', 'Hotdog');
+  SLL.insertAt(3, 'Kat');
 }
 
 main();
