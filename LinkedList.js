@@ -232,5 +232,26 @@ class LinkedList {
     );
     return;
   }
+
+  reverse() {
+    if (this.isempty()) {
+      console.log(
+        'empty list: yer lookin at the last thing '
+      );
+    }
+    let currentNode = this.head;
+    let previousNode = this.head;
+    
+    while (currentNode.next) {
+      previousNode = currentNode;
+      currentNode = currentNode.next;
+    }
+     
+    currentNode.next = previousNode;
+    previousNode.next = null;
+
+    return this.reverse()
+  }
+
 }
 module.exports = LinkedList;
