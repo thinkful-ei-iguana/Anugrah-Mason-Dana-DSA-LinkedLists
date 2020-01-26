@@ -56,6 +56,7 @@ class LinkedList {
       console.log(
         'empty list: yer lookin at the last thing '
       );
+      return;
     }
     let currentNode = this.head;
     while (currentNode.next) {
@@ -238,20 +239,107 @@ class LinkedList {
       console.log(
         'empty list: yer lookin at the last thing '
       );
+
+      return;
     }
     let currentNode = this.head;
     let previousNode = this.head;
-    
-    while (currentNode.next) {
-      previousNode = currentNode;
-      currentNode = currentNode.next;
-    }
-     
-    currentNode.next = previousNode;
-    previousNode.next = null;
+    let lastNode;
+    let count = 0;
 
-    return this.reverse()
+    do {
+      while (currentNode.next) {
+        previousNode = currentNode; //points to head
+        currentNode = currentNode.next; //this is the first node
+      }
+      // let lastNode = currentNode;
+      currentNode.next = previousNode;
+      previousNode.next = null;
+      if (count === 0) {
+        lastNode = currentNode;
+        count++;
+      }
+      currentNode = this.head;
+    } while (
+      previousNode !== this.head
+    );
+    this.head = lastNode;
+    this.display();
   }
 
+  findMiddle() {
+    let middle = Math.round(
+      this.size() / 2
+    ); //assumes you want to get the first middle with an even number
+    if (this.isempty()) {
+      console.log(
+        'no middle  to an empty array'
+      );
+      return;
+    }
+    let currentNode = this.head;
+    for (let i = 1; i < middle; i++) {
+      currentNode = currentNode.next;
+    }
+
+    return currentNode;
+  }
+
+  includes(node) {
+    /**
+     * checks to see if a node is in the linked list
+     */
+    console.log('doing stuff');
+    if (this.isempty()) {
+      console.log(
+        'empty arrays can not have anything'
+      );
+      return;
+    }
+    let currentNode = this.head;
+
+    while (
+      currentNode &&
+      currentNode !== node
+    ) {
+      currentNode = currentNode.next;
+    }
+    return !!currentNode; //if it exists then true, otherwise false
+  }
+
+  hascycle() {
+    if (this.isempty()) {
+      console.log(
+        'empty arrays can not have cycles'
+      );
+      return;
+    }
+    let copyList = new LinkedList();
+    let currentNode = this.head;
+    let currentSection = new LinkedList();
+    currentSection.head = this.head.next;
+    //should check that the reference for a node is repeated not the value
+    // while (currentSection.head) {
+    while (currentNode) {
+      //compares the current node to all the previous
+
+      // if (
+      //   currentSection.includes(
+      //     currentNode
+      //   )
+      // ) {
+      //   return true;
+      // }
+      if (currentNode.visited) {
+        return true;
+      }
+      currentNode.visited = true;
+      currentNode = currentNode.next;
+
+      // currentSection.head =
+      //   currentNode.next;
+    }
+    return false;
+  }
 }
 module.exports = LinkedList;
